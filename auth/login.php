@@ -11,9 +11,40 @@ $DBCONN = $dbConn;
 
 
 if (isset($_POST["submit"])) {
-    $loginUser = $_POST["username"];
-    $loginPass = $_POST["password"];
+
+    $_SESSION['login-try'] = true;
+
+    if (strlen($_POST["username"]) < 5 || strlen($_POST["password"]) < 8) {
+        if (strlen($_POST["username"]) < 5 && strlen($_POST["password"]) < 8) {
+            $_SESSION["error_login_username_length"] = "username should be atleast 5 charachters";
+            $_SESSION["error_login_password_length"] = "Password should be atleast 8 charachters";
+            header('Location:../index.php');
+        } elseif (strlen($_POST["username"]) < 5) {
+            $_SESSION["error_login_username_length"] = "username should be atleast 5 charachters";
+            header('Location:../index.php');
+        } elseif (strlen($_POST["password"]) < 8) {
+            $_SESSION["error_login_password_length"] = "Password should be atleast 8 charachters";
+            header('Location:../index.php');
+        }
+    } elseif (strlen($_POST["username"]) >= 5 || strlen($_POST["password"]) >= 8) {
+        if (session_status() === PHP_SESSION_NONE) {
+            // Starte die Session
+            session_start();
+        }
+        $_SESSION["error_login_username_length"] = "";
+        $_SESSION["error_login_password_length"] = "";
+        $loginUser = $_POST["username"];
+        $loginPass = $_POST["password"];
+        login($loginUser, $loginPass);
+    }
+} else {
+    $_SESSION['login-try'] = false;
+    $_SESSION["error_login_username_length"] = "";
+    $_SESSION["error_login_password_length"] = "";
+    session_unset();
+    session_destroy();
 }
+
 
 
 
@@ -34,7 +65,6 @@ function login($username, $password)
             $userExists = $GLOBALS['DBCONN']->prepare($testUser);
 
             $userExists->bindParam(':username', $username);
-            // $userExists->bindParam(':password', $password);
 
             $userExists->execute();
 
@@ -61,6 +91,3 @@ function login($username, $password)
 
     header('Location:../index.php');
 }
-
-
-login($loginUser, $loginPass);

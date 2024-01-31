@@ -40,14 +40,27 @@ include_once 'components/header.php';
     <form action="auth/login.php" method="POST">
         <label for="username">username</label>
         <input type="text" name="username" id="username">
+        <?php
+
+        echo  $_SESSION['error_login_username_length'] ?? "";
+
+
+        ?>
         <label for="password">password</label>
         <input type="password" name="password" id="password">
+        <?php
+
+        echo $_SESSION['error_login_password_length'] ?? "";
+
+        ?>
+
         <input type="submit" value="login" name="submit">
     </form>
 
 </body>
 <?php echo '<script src="assets/js/script.js"></script>';
-echo $_POST['username'];
+$test = "melke";
+echo strlen($test);
 ?>
 
 </html>

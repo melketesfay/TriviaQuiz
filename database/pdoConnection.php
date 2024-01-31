@@ -21,7 +21,7 @@ try {
 
 
 $query = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR (255),password VARCHAR (255))";
-$query = "INSERT INTO users (name,password) VALUES ('user3','user3-pass')";
+$query = "INSERT INTO users (name,password) VALUES ('user4','user4-pass')";
 
 
 // $dbConn->exec($query);
