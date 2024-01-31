@@ -46,6 +46,8 @@ include_once 'components/header.php';
     </form>
 
 </body>
-<?php echo '<script src="assets/js/script.js"></script>'; ?>
+<?php echo '<script src="assets/js/script.js"></script>';
+echo $_POST['username'];
+?>
 
 </html>

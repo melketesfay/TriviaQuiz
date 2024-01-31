@@ -3,7 +3,7 @@
 
 
 
-$dbName = getenv('DB_NAME');
+$dbName = getenv('MYSQL_DATABASE');
 
 $dbUser = getenv('MYSQL_USER');
 $dbPassword = getenv('MYSQL_PASSWORD');
@@ -30,20 +30,20 @@ $query = "INSERT INTO users (name,password) VALUES ('user3','user3-pass')";
 
 
 
-// try {
-//     // Hier definieren wir das SQL statement.
-//     $sqlCreatePageTable = "SELECT * FROM users";
-//     $result = $dbConn->prepare($sqlCreatePageTable);
+try {
+    // Hier definieren wir das SQL statement.
+    $sqlCreatePageTable = "SELECT * FROM users";
+    $result = $dbConn->prepare($sqlCreatePageTable);
 
-//     // exec führt das SQL statment oben aus.
-//     $result->execute();
+    // exec führt das SQL statment oben aus.
+    $result->execute();
 
 
-//     $resultfinl = $result->fetchAll(PDO::FETCH_ASSOC);
-// } catch (PDOException $e) {
+    $resultfinl = $result->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
 
-//     echo $e->getMessage();
-// }
+    echo $e->getMessage();
+}
 
 
 

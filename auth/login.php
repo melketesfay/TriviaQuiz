@@ -25,35 +25,41 @@ function login($username, $password)
 
 {
 
+    if ($username !== "" && $password !== "") {
+        try {
 
-    try {
-
-        $testUser = "SELECT *, COUNT(#) AS num FROM users WHERE name=:username ";
+            $testUser = "SELECT * FROM users WHERE name=:username LIMIT 1";
 
 
-        $userExists = $GLOBALS['DBCONN']->prepare($testUser);
+            $userExists = $GLOBALS['DBCONN']->prepare($testUser);
 
-        $userExists->bindParam(':username', $username);
-        // $userExists->bindParam(':password', $password);
+            $userExists->bindParam(':username', $username);
+            // $userExists->bindParam(':password', $password);
 
-        $userExists->execute();
+            $userExists->execute();
 
-        $user = $userExists->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($user);
+            $user = $userExists->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($user[0]['name'] == $username && $user[0]['password'] == $password) {
-            $_SESSION["name"] = $username;
-            header('Location:../welcome.php');
 
-            return true;
-        } else {
+
+
+            if ($user[0]['name'] == $username && $user[0]['password'] == $password) {
+                $_SESSION["name"] = $username;
+                header('Location:../welcome.php');
+
+                return true;
+            } else {
+                header('Location:../index.php');
+                return false;
+            }
+        } catch (\PDOException $error) {
             header('Location:../index.php');
-            return false;
+            echo "Query Error" . $error->getMessage();
         }
-    } catch (\PDOException $error) {
-        echo "Query Error" . $error->getMessage();
-        header('Location:../index.php');
     }
+
+
+    header('Location:../index.php');
 }
 
 
