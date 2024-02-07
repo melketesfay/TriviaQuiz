@@ -7,20 +7,6 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once "database/pdoConnection.php";
 include_once 'components/header.php';
 
-// $path = "/database/pdoConnection.php";
-// include $_SERVER['DOCUMENT_ROOT'] . $path;
-
-
-// echo "<h1>HALLO</h1>";
-// $dbName = getenv('DB_NAME');
-// echo "DB NAME: $dbName<br>";
-
-// echo $_SERVER['DOCUMENT_ROOT'];
-
-
-
-
-
 
 
 ?>
@@ -60,8 +46,13 @@ include_once 'components/header.php';
 
 </body>
 <?php echo '<script src="assets/js/script.js"></script>';
-$test = "melke";
-echo strlen($test);
+
+
+
+
+
+
+
 ?>
 
 </html>

@@ -1,16 +1,7 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
-
-    font-family: Inter;
-    font-weight: 900;
-    color: red;
-    border: 5px solid black;
     background-color: black !important;
-}
-
-form {
-    background-color: green;
+    font-weight: 500;
+    font-family: Inter;
+    color: red;
+    font-size: 5rem;
 }

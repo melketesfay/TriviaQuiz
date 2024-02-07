@@ -21,8 +21,15 @@ try {
 
 
 $query = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR (255),password VARCHAR (255))";
-$query = "INSERT INTO users (name,password) VALUES ('user2','user2-pass')";
+$query = "INSERT INTO users (name,password) VALUES ('user6','user6-pass')";
 
+// &query = "SELECT Q.question, A.answer, c.CustomerName
+// FROM Customers AS c, Orders AS o
+// WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID";
+
+$query = "SELECT Q.question, A.answer
+FROM questions AS Q, answers AS A
+WHERE Q.id=14 AND (A.question_id=14 AND A.is_correct =1)";
 
 // $dbConn->exec($query);
 
@@ -31,8 +38,27 @@ $query = "INSERT INTO users (name,password) VALUES ('user2','user2-pass')";
 
 
 try {
-    // Hier definieren wir das SQL statement.
-    $sqlCreatePageTable = "SELECT * FROM users";
+    // Select question 14 and the correct answer
+    $sqlCreatePageTable = "SELECT Q.question, A.answer
+    FROM questions AS Q, answers AS A
+    WHERE Q.id=14 AND (A.question_id=14 AND A.is_correct =1)";
+
+    //Slecet multiple questions and their corresponding answers
+    $sqlCreatePageTable = "SELECT Q.question, A.answer
+    FROM questions AS Q, answers AS A
+    WHERE Q.id IN(2,4,6,8,10) AND A.question_id=Q.id  AND A.is_correct=1";
+
+
+    // Select multiple questions and their corresponding answers with INNER JOIN
+    $sqlCreatePageTable = "SELECT * FROM questions INNER JOIN answers ON questions.id = answers.question_id WHERE answers.is_correct=1";
+
+    // Select multiple questions and their corresponding answers with RIGHT JOIN
+
+    $sqlCreatePageTable = "SELECT question ,answers.answer FROM questions INNER JOIN answers ON questions.id = answers.question_id";
+
+
+
+
     $result = $dbConn->prepare($sqlCreatePageTable);
 
     // exec führt das SQL statment oben aus.
@@ -44,13 +70,3 @@ try {
 
     echo $e->getMessage();
 }
-
-
-
-// echo "<pre>";
-// var_dump($resultfinl);
-
-
-
-
-// echo "</pre>";
