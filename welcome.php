@@ -6,8 +6,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once "database/pdoConnection.php";
+include_once 'components/header.php';
 
-var_dump($resultfinl);
+// echo "<pre>";
+// var_dump($resultfinl);
+// echo "<br>";
+// echo readfile(__FILE__);
+// echo "</pre>";
+
 
 ?>
 
@@ -26,6 +32,7 @@ var_dump($resultfinl);
 
 
     <h1>Welcome <?php echo $_SESSION['name']; ?></h1>
+    <h2>test</h2>
 </body>
 
 </html>

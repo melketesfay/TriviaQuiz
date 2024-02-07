@@ -1,16 +1,17 @@
 <?php
-
-// include_once '../components/header.php';
-include_once '../database/pdoConnection.php';
 if (session_status() === PHP_SESSION_NONE) {
     // Starte die Session
     session_start();
 }
 
-$DBCONN = $dbConn;
+
+include_once '../database/pdoConnection.php';
+// include_once '../components/header.php';
 
 
-if (isset($_POST["submit"])) {
+
+
+if (isset($_POST["submit"]) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $_SESSION['login-try'] = true;
 
@@ -54,7 +55,9 @@ if (isset($_POST["submit"])) {
 
 function login($username, $password)
 
+
 {
+    global $dbConn;
 
     if ($username !== "" && $password !== "") {
         try {
@@ -62,7 +65,7 @@ function login($username, $password)
             $testUser = "SELECT * FROM users WHERE name=:username LIMIT 1";
 
 
-            $userExists = $GLOBALS['DBCONN']->prepare($testUser);
+            $userExists = $dbConn->prepare($testUser);
 
             $userExists->bindParam(':username', $username);
 
@@ -91,3 +94,18 @@ function login($username, $password)
 
     header('Location:../index.php');
 }
+
+
+function validateUsername($username)
+{
+    $regex = '/[^a-zA-z0-9_-]{5,}/';
+
+    if (preg_match($regex, $username)) {
+        echo "username not valid";
+        return false;
+    }
+
+    echo "valid username";
+}
+
+validateUsername("Mell");
