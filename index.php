@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
+include_once "database/pdoConnection.php";
 include_once 'components/header.php';
 
 // $path = "/database/pdoConnection.php";
@@ -28,6 +28,7 @@ include_once 'components/header.php';
 
 <body>
 
+    <p>hallo</p>
 
 
 
@@ -37,7 +38,7 @@ include_once 'components/header.php';
     </p>
 
 
-    <form action="auth/login.php" method="POST">
+    <form action=" auth/login.php" method="POST">
         <label for="username">username</label>
         <input type="text" name="username" id="username">
         <?php

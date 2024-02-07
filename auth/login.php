@@ -1,12 +1,12 @@
 <?php
 
 // include_once '../components/header.php';
-include_once '../database/pdoConnection.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     // Starte die Session
     session_start();
 }
-
+include_once '../database/pdoConnection.php';
 $DBCONN = $dbConn;
 
 
@@ -16,14 +16,14 @@ if (isset($_POST["submit"])) {
 
     if (strlen($_POST["username"]) < 5 || strlen($_POST["password"]) < 8) {
         if (strlen($_POST["username"]) < 5 && strlen($_POST["password"]) < 8) {
-            $_SESSION["error_login_username_length"] = "username should be atleast 5 charachters";
-            $_SESSION["error_login_password_length"] = "Password should be atleast 8 charachters";
+            $_SESSION["error_login_username_length"] = '<p id="error">username should be atleast 5 charachters</p>';
+            $_SESSION["error_login_password_length"] = '<p id="error">Password should be atleast 8 charachters</p>';
             header('Location:../index.php');
         } elseif (strlen($_POST["username"]) < 5) {
-            $_SESSION["error_login_username_length"] = "username should be atleast 5 charachters";
+            $_SESSION["error_login_username_length"] = '<p id="error">username should be atleast 5 charachters</p>';
             header('Location:../index.php');
         } elseif (strlen($_POST["password"]) < 8) {
-            $_SESSION["error_login_password_length"] = "Password should be atleast 8 charachters";
+            $_SESSION["error_login_password_length"] = '<p id="error">Password should be atleast 8 charachters</p>';
             header('Location:../index.php');
         }
     } elseif (strlen($_POST["username"]) >= 5 || strlen($_POST["password"]) >= 8) {

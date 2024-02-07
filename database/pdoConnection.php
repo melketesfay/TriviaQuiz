@@ -21,7 +21,7 @@ try {
 
 
 $query = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR (255),password VARCHAR (255))";
-$query = "INSERT INTO users (name,password) VALUES ('user4','user4-pass')";
+$query = "INSERT INTO users (name,password) VALUES ('user2','user2-pass')";
 
 
 // $dbConn->exec($query);
@@ -47,14 +47,9 @@ try {
 
 
 
+// echo "<pre>";
+// var_dump($resultfinl);
 
-// // var_dump($resultfinl);
-// echo "<pre>" . "\n";
-
-// foreach ($resultfinl as $key => $value) {
-//     print_r($value['name'] . "\n");
-// }
-// // var_dump($resultfinl);
 
 
 
