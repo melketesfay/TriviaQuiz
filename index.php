@@ -28,7 +28,7 @@ include_once 'components/header.php';
         <input type="text" name="username" id="username">
         <?php
 
-        echo  $_SESSION['error_login_username_length'] ?? "";
+        echo $_SESSION['credentialErrors'][0] ?? "";
 
 
         ?>
@@ -36,7 +36,7 @@ include_once 'components/header.php';
         <input type="password" name="password" id="password">
         <?php
 
-        echo $_SESSION['error_login_password_length'] ?? "";
+        echo $_SESSION['credentialErrors'][1] ?? "";
 
         ?>
 
