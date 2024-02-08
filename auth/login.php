@@ -6,44 +6,22 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 include_once '../database/pdoConnection.php';
-// include_once '../components/header.php';
+include_once '../components/header.php';
 
 
 
 
 if (isset($_POST["submit"]) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $_SESSION['login-try'] = true;
-
-    if (strlen($_POST["username"]) < 5 || strlen($_POST["password"]) < 8) {
-        if (strlen($_POST["username"]) < 5 && strlen($_POST["password"]) < 8) {
-            $_SESSION["error_login_username_length"] = '<p id="error">username should be atleast 5 charachters</p>';
-            $_SESSION["error_login_password_length"] = '<p id="error">Password should be atleast 8 charachters</p>';
-            header('Location:../index.php');
-        } elseif (strlen($_POST["username"]) < 5) {
-            $_SESSION["error_login_username_length"] = '<p id="error">username should be atleast 5 charachters</p>';
-            header('Location:../index.php');
-        } elseif (strlen($_POST["password"]) < 8) {
-            $_SESSION["error_login_password_length"] = '<p id="error">Password should be atleast 8 charachters</p>';
-            header('Location:../index.php');
+    if (!validateUsername($_POST['username']) || !validatePassword($_POST['password'])) {
+        if (!validateUsername($_POST['username'])) {
+            $_SESSION['credentialErrors'][0] = "Username must be at least 5 Chars(a-Z0-9_-)";
         }
-    } elseif (strlen($_POST["username"]) >= 5 || strlen($_POST["password"]) >= 8) {
-        if (session_status() === PHP_SESSION_NONE) {
-            // Starte die Session
-            session_start();
-        }
-        $_SESSION["error_login_username_length"] = "";
-        $_SESSION["error_login_password_length"] = "";
-        $loginUser = $_POST["username"];
-        $loginPass = $_POST["password"];
-        login($loginUser, $loginPass);
+        $_SESSION['credentialErrors'][1] = "password must be at least 8 Chars and must include (a-zA-Z0-9#?&/)";
+        return false;
     }
-} else {
-    $_SESSION['login-try'] = false;
-    $_SESSION["error_login_username_length"] = "";
-    $_SESSION["error_login_password_length"] = "";
-    session_unset();
-    session_destroy();
+
+    login($_POST['username'], $_POST['password']);
 }
 
 
@@ -54,58 +32,61 @@ if (isset($_POST["submit"]) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 function login($username, $password)
-
-
 {
+
     global $dbConn;
 
-    if ($username !== "" && $password !== "") {
-        try {
+    try {
 
-            $testUser = "SELECT * FROM users WHERE name=:username LIMIT 1";
+        $testUser = "SELECT * FROM users WHERE name=:username";
+        $userExists = $dbConn->prepare($testUser);
+        $userExists->bindParam(':username', $username);
+        $userExists->execute();
+        $user = $userExists->fetchAll(PDO::FETCH_ASSOC);
+        echo "<pre>";
+        print_r($user);
+        echo "</pre>";
+    } catch (\PDOException $error) {
 
-
-            $userExists = $dbConn->prepare($testUser);
-
-            $userExists->bindParam(':username', $username);
-
-            $userExists->execute();
-
-            $user = $userExists->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-
-            if ($user[0]['name'] == $username && $user[0]['password'] == $password) {
-                $_SESSION["name"] = $username;
-                header('Location:../welcome.php');
-
-                return true;
-            } else {
-                header('Location:../index.php');
-                return false;
-            }
-        } catch (\PDOException $error) {
-            header('Location:../index.php');
-            echo "Query Error" . $error->getMessage();
-        }
+        echo "Query Error" . $error->getMessage();
     }
-
-
-    header('Location:../index.php');
 }
 
 
+
+//username must be at  least 5 chars and can contain alphanumerics and -
 function validateUsername($username)
 {
-    $regex = '/[^a-zA-z0-9_-]{5,}/';
+    $regex = '/[^a-zA-z0-9_-]/';
 
-    if (preg_match($regex, $username)) {
+
+    if (preg_match($regex, $username) || strlen($username) < 5) {
         echo "username not valid";
         return false;
     }
 
-    echo "valid username";
+    echo "valid username<br>";
+    return true;
 }
 
-validateUsername("Mell");
+
+
+
+function validatePassword($password)
+{
+    // check for at least 8 chars must contain (capital letters, small letters,numbers,&/#-?)
+
+    $regex = "/((?=\w{7,})(?=\D*\d+))(?=\d*\w*[A-Z]+)(?=\d*\w*[a-z]+)(?=\d*\w*[#-&\/?]+)/";
+
+    $regex = "/(?=(\w|\W){7,})(?=\D*\d+)(?=\d*\w*\W*[A-Z]+)(?=\d*\w*\W*[a-z]+)(?=\w*\d*\W+)/";
+
+
+    if (!preg_match($regex, $password)) {
+        echo "password not safe<br>";
+        return false;
+    }
+    echo "password safe";
+    return true;
+}
+
+validatePassword("aaa&aaA1sds");
