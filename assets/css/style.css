@@ -2,6 +2,11 @@ body {
     background-color: black !important;
     font-weight: 500;
     font-family: Inter;
-    color: red;
+    color: greenyellow;
     font-size: 2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
 }

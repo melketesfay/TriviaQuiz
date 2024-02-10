@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 include_once '../database/pdoConnection.php';
-include_once '../components/header.php';
+// include_once '../components/header.php';
 
 
 
@@ -18,6 +18,7 @@ if (isset($_POST["submit"]) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['credentialErrors'][0] = "Username must be at least 5 Chars(a-Z0-9_-)";
         }
         $_SESSION['credentialErrors'][1] = "password must be at least 8 Chars and must include (a-zA-Z0-9#?&/)";
+        header('Location: ../index.php');
         return false;
     }
 
@@ -31,41 +32,58 @@ if (isset($_POST["submit"]) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 // echo "<pre>" . "<br>" . $loginUser . "<br>" . $loginPass;
 
 
+
+
+
 function login($username, $password)
 {
-
+    $username = sanitizeInput($username);
+    $password = sanitizeInput($password);
     global $dbConn;
 
     try {
 
-        $testUser = "SELECT * FROM users WHERE name=:username";
+        $testUser = "SELECT name,password FROM users WHERE name=:username";
+
         $userExists = $dbConn->prepare($testUser);
         $userExists->bindParam(':username', $username);
         $userExists->execute();
-        $user = $userExists->fetchAll(PDO::FETCH_ASSOC);
-        echo "<pre>";
-        print_r($user);
-        echo "</pre>";
+        $user = $userExists->fetch(PDO::FETCH_ASSOC);
+        // echo "<pre>";
+        // print_r($user['password']);
+        // echo "</pre>";
     } catch (\PDOException $error) {
 
         echo "Query Error" . $error->getMessage();
     }
+
+
+    if ($username == $user['name'] && password_verify($password, $user['password'])) {
+        $_SESSION['username'] = $username;
+        header('Location: ../welcome.php');
+        return true;
+    }
+
+    header('Location: ../index.php');
+    return false;
 }
 
 
 
-//username must be at  least 5 chars and can contain alphanumerics and -
+
+
+//username must be at  least 5 and max 12 chars and can contain alphanumerics and -
 function validateUsername($username)
 {
     $regex = '/[^a-zA-z0-9_-]/';
 
 
-    if (preg_match($regex, $username) || strlen($username) < 5) {
-        echo "username not valid";
+    if (preg_match($regex, $username) || strlen($username) < 5 || strlen($username) > 12) {
+        // echo "username not valid";
         return false;
     }
 
-    echo "valid username<br>";
+    // echo "valid username<br>";
     return true;
 }
 
@@ -74,19 +92,22 @@ function validateUsername($username)
 
 function validatePassword($password)
 {
-    // check for at least 8 chars must contain (capital letters, small letters,numbers,&/#-?)
+    // check for at least 8 and max 16 chars must contain (capital letters, small letters,numbers,&/#-?)
 
-    $regex = "/((?=\w{7,})(?=\D*\d+))(?=\d*\w*[A-Z]+)(?=\d*\w*[a-z]+)(?=\d*\w*[#-&\/?]+)/";
-
-    $regex = "/(?=(\w|\W){7,})(?=\D*\d+)(?=\d*\w*\W*[A-Z]+)(?=\d*\w*\W*[a-z]+)(?=\w*\d*\W+)/";
-
-
+    $regex = "/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[$\/#?])(?!\s)[A-Za-z0-9$\/#?]{8,16}$/";
     if (!preg_match($regex, $password)) {
-        echo "password not safe<br>";
+        // echo "password not safe<br>";
         return false;
     }
-    echo "password safe";
+    // echo "password safe";
     return true;
 }
 
-validatePassword("aaa&aaA1sds");
+// sanitize input by removing extra space backslash and html chars(html injection,sql injection)
+function sanitizeInput($input)
+{
+    $input = trim($input);
+    $input = stripslashes($input);
+    $input = htmlspecialchars($input);
+    return $input;
+}

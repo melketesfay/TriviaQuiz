@@ -8,11 +8,9 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once "database/pdoConnection.php";
 include_once 'components/header.php';
 
-// echo "<pre>";
-// var_dump($resultfinl);
-// echo "<br>";
-// echo readfile(__FILE__);
-// echo "</pre>";
+
+
+
 
 
 ?>
@@ -31,7 +29,7 @@ include_once 'components/header.php';
 <body>
 
 
-    <h1>Welcome <?php echo $_SESSION['name']; ?></h1>
+    <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
     <h2>test</h2>
 </body>
 

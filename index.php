@@ -7,7 +7,18 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once "database/pdoConnection.php";
 include_once 'components/header.php';
 
+global $dbConn;
 
+$query = "SELECT * FROM users";
+$query = $dbConn->prepare($query);
+$query->execute();
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+echo "<pre>";
+var_dump($result);
+var_dump($_SESSION['credentialErrors']);
+var_dump($_SESSION);
+echo "<br>";
 
 ?>
 
@@ -27,20 +38,10 @@ include_once 'components/header.php';
     <form action=" auth/login.php" method="POST">
         <label for="username">username</label>
         <input type="text" name="username" id="username">
-        <?php
-
-        echo $_SESSION['credentialErrors'][0] ?? "";
-
-
-        ?>
+        <?php echo "<p>" . $_SESSION['credentialErrors'][0] ?? '' . "</p>"; ?>
         <label for="password">password</label>
         <input type="password" name="password" id="password">
-        <?php
-
-        echo $_SESSION['credentialErrors'][1] ?? "";
-
-        ?>
-
+        <?php echo "<p>" . $_SESSION['credentialErrors'][1] ?? '' . "</p>"; ?>
         <input type="submit" value="login" name="submit">
     </form>
 
