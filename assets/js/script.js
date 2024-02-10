@@ -1,4 +1,8 @@
 console.log("hallo");
+var dummy = [];
 
-window.addEventListener('load',(event)=>document.body.style.backgroundColor="white");
+for (var k = 0; k < 99999999; k++) {
+  dummy.push(new Date());
+}
 
+console.log(dummy);
