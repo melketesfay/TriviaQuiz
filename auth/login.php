@@ -8,16 +8,17 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once '../database/pdoConnection.php';
 // include_once '../components/header.php';
 
-
+$_SESSION['credentialErrors'][0] = "";
+$_SESSION['credentialErrors'][1] = "";
 
 
 if (isset($_POST["submit"]) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!validateUsername($_POST['username']) || !validatePassword($_POST['password'])) {
         if (!validateUsername($_POST['username'])) {
-            $_SESSION['credentialErrors'][0] = "Username must be at least 5 Chars(a-Z0-9_-)";
+            $_SESSION['credentialErrors'][3] = 'wrong username or password' ?? '';
         }
-        $_SESSION['credentialErrors'][1] = "password must be at least 8 Chars and must include (a-zA-Z0-9#?&/)";
+        $_SESSION['credentialErrors'][3] = 'wrong username or password' ?? '';
         header('Location: ../index.php');
         return false;
     }
@@ -50,21 +51,26 @@ function login($username, $password)
         $userExists->execute();
         $user = $userExists->fetch(PDO::FETCH_ASSOC);
         // echo "<pre>";
-        // print_r($user['password']);
+        // print_r(!$user);
         // echo "</pre>";
     } catch (\PDOException $error) {
 
         echo "Query Error" . $error->getMessage();
     }
 
+    if (!$user) {
+        $_SESSION['credentialErrors'][3] = 'wrong username or password' ?? '';
+        header('Location: ../index.php');
 
-    if ($username == $user['name'] && password_verify($password, $user['password'])) {
+        return false;
+    } elseif ($username == $user['name'] && password_verify($password, $user['password'])) {
         $_SESSION['username'] = $username;
         header('Location: ../welcome.php');
         return true;
     }
-
     header('Location: ../index.php');
+    // $_SESSION['credentialErrors'][2] = 'wrong username or password' ?? '';
+
     return false;
 }
 

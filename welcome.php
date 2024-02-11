@@ -4,7 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
     // Starte die Session
     session_start();
 }
-
+if (!isset($_SESSION['username'])) {
+    header('location: index.php');
+    return false;
+}
 include_once "database/pdoConnection.php";
 include_once 'components/header.php';
 
@@ -30,7 +33,10 @@ include_once 'components/header.php';
 
 
     <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
-    <h2>test</h2>
+    <form action="auth/logout.php" method="get">
+        <button type="submit">log out</button>
+    </form>
 </body>
+
 
 </html>

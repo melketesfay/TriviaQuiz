@@ -27,7 +27,7 @@ $query = "UPDATE users SET password= :pass where name=:user";
 
 //pasword for smith "Avdc12/sd"
 $password = "Avdc12/sd";
-//password for melke and tesfay "Avdc12&sd" 
+//password for melke and tesfay "Avdc12$sd" 
 $password = 'Avdc12$sd';
 $password = password_hash($password, PASSWORD_DEFAULT);
 

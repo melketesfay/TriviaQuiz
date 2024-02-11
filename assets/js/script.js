@@ -1,8 +1,15 @@
-console.log("hallo");
-var dummy = [];
-
-for (var k = 0; k < 99999999; k++) {
-  dummy.push(new Date());
+function login() {
+  document.querySelector("input[type='text']").value = "tesfay";
+  document.querySelector("input[type='password']").value = "Avdc12$sd";
+  document.querySelector("input[type='submit']").click();
 }
 
-console.log(dummy);
+function reload() {
+  location.reload();
+  console.log("reloaded");
+  setTimeout(1000);
+  login();
+  console.log("tried login");
+}
+
+// setInterval(reload, 5000);

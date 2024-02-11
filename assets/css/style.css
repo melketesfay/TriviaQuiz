@@ -2,11 +2,20 @@ body {
     background-color: black !important;
     font-weight: 500;
     font-family: Inter;
-    color: greenyellow;
+    color: rgb(0, 255, 0);
     font-size: 2rem;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    /* width: 50%; */
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: blue;
 }
