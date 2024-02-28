@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
+
 include_once '../database/pdoConnection.php';
 // include_once '../components/header.php';
 
@@ -64,7 +65,7 @@ function signUp($username, $email, $password)
 
         $userExists->execute();
         $user = $userExists->fetch(PDO::FETCH_ASSOC);
-        ////debug
+        // //debug
         // echo "<pre>";
         // print_r(!$user);
         // if (!$user) {

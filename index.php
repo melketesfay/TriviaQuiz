@@ -14,30 +14,31 @@ $query = $dbConn->prepare($query);
 $query->execute();
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-echo "<pre>";
-var_dump($result);
-var_dump($_SESSION['credentialErrors']);
-var_dump($_SESSION);
-echo "<br></pre>";
+// echo "<pre>";
+// var_dump($result);
+// var_dump($_SESSION['credentialErrors']);
+// var_dump($_SESSION);
+// echo "<br></pre>";
 
 ?>
 
 
 <body>
 
-    <p>hallo</p>
 
 
 
-    <p>
-        When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and
-        they are \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
-    </p>
+
+
 
 
 
     <form action=" auth/login.php" method="POST">
-        <?php echo "<p class='error'>" . $_SESSION['credentialErrors'][3]  . "</p>" ?? ''; ?>
+        <?php if (isset($_SESSION['credentialErrors'][3])) {
+            echo "<p class='error'>" . $_SESSION['credentialErrors'][3]  . "</p>" ?? '';
+        }
+
+        ?>
         <label for="username">username</label>
         <input type="text" name="username" id="username">
         <?php //echo "<p class='error'>" . $_SESSION['credentialErrors'][0]  . "</p>"; 
@@ -59,8 +60,9 @@ echo "<br></pre>";
 $_SESSION['credentialErrors'][3] = "";
 
 
-
-
+include_once 'components/footer.php';
 ?>
+
+
 
 </html>

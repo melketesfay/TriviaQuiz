@@ -1,5 +1,36 @@
+:root{
+
+    /* colors */
+    --main-bg-color:rgb(35, 7, 35) ;
+    --sec-bg-color:purple;
+    --main-txt-color:rgb(219, 152, 219);
+    --sec-txt-color:purple;
+
+/* sizes */
+
+--main-txt-size:1.6rem;
+--title-txt-size:4rem;
+--subtile-txt-size:2.5rem;
+--big-txt-size:2rem;
+    
+
+}
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 10px;
+}
+
+
+
+
+
+
 body {
-    background-color: black !important;
+    background-color: var(--main-bg-color) !important;
     font-weight: 500;
     font-family: Inter;
     color: rgb(0, 255, 0);

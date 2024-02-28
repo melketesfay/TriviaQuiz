@@ -10,13 +10,17 @@ include_once("components/header.php");
 
     <p>sign up!</p>
 
-    <?php echo "<h2 class='success'>" . $_SESSION['credentialErrors']['created']  . "</h2>"; ?>
+    <?php if (isset($_SESSION['credentialErrors']['created'])) {
+        echo "<h2 class='success'>" . $_SESSION['credentialErrors']['created']  . "</h2>";
+    }
+
+    ?>
 
 
 
 
 
-    <form action=" auth/create.php" method="POST">
+    <form action="./auth/create.php" method="POST">
 
         <label for="username">username</label>
         <input type="text" name="username" id="username">
@@ -51,11 +55,11 @@ $_SESSION['credentialErrors'][1] = "";
 $_SESSION['credentialErrors'][2] = "";
 $_SESSION['credentialErrors'][4] = "";
 $_SESSION['credentialErrors'][5] = "";
-// $_SESSION["credentialErrors"]['created'] = "";
+$_SESSION["credentialErrors"]['created'] = "";
 
 
 
-
+include_once 'components/footer.php';
 ?>
 
 </html>

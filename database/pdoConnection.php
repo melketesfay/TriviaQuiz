@@ -20,19 +20,20 @@ try {
 }
 
 
-$query = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR (255),password VARCHAR (255))";
+$query = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR (255),password VARCHAR (255),email VARCHAR (255) )";
 
-$query = "INSERT INTO users (name,password) VALUES (:user,:pass)";
-$query = "UPDATE users SET password= :pass where name=:user";
+// $query = "INSERT INTO users (name,password) VALUES (:user,:pass)";
+// $query = "UPDATE users SET password= :pass where name=:user";
 
-//pasword for smith "Avdc12/sd"
-$password = "Avdc12/sd";
-//password for melke and tesfay "Avdc12$sd" 
-$password = 'Avdc12$sd';
-$password = password_hash($password, PASSWORD_DEFAULT);
+// //pasword for smith "Avdc12/sd"
+// $password = "Avdc12/sd";
+// //password for melke and tesfay "Avdc12$sd" 
+// $password = 'Avdc12$sd';
+// $password = password_hash($password, PASSWORD_DEFAULT);
 
-$arr = ['user' => 'tesfay', 'pass' => $password];
-// $queryR = $dbConn->prepare($query);
+// $arr = ['user' => 'tesfay', 'pass' => $password];
+$queryR = $dbConn->prepare($query);
+$queryR->execute();
 
 // $queryR->execute($arr);
 
