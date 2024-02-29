@@ -24,23 +24,31 @@ function GoToResults()
         When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and
         they are \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
     </p> -->
-
-    <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
-
-
-
-
-    <form action="quiz.php" method="get">
-
-        <input type="submit" value="Start Quiz">
+    <header>
+        <div class="container">
+            <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
+        </div>
+    </header>
 
 
+    <main>
+        <div class="container">
+            <form action="quiz.php" method="get">
 
-    </form>
+                <input type="submit" value="Start Quiz">
 
-    <form action="auth/logout.php" method="get">
-        <button type="submit">log out</button>
-    </form>
+
+
+            </form>
+
+            <form action="auth/logout.php" method="get">
+                <button type="submit">log out</button>
+            </form>
+        </div>
+    </main>
+
+
+
 
 </body>
 
