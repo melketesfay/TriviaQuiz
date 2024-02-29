@@ -8,32 +8,21 @@ if (!isset($_SESSION['username'])) {
     header('location: index.php');
     return false;
 }
+
 include_once "database/pdoConnection.php";
+
 include_once 'components/header.php';
 
 
+// GEt total questions
 
-$sqlCreatePageTable = "SELECT Q.question, A.answer,A.value FROM questions AS Q, answers AS A WHERE A.questionID=Q.id";
-
-
-$result = $dbConn->prepare($sqlCreatePageTable);
-
+$NumberOfQuestions = "SELECT * from questions";
+$result = $dbConn->prepare($NumberOfQuestions);
 $result->execute();
-$questions = $result->fetchAll(PDO::FETCH_ASSOC);
 
-echo "<pre>";
-
-var_dump($questions);
+$NumberOfQuestions = $result->rowCount();
 
 
-
-echo "</pre>";
-
-// change form action to results when quiz has finished or user stops
-function GoToResults()
-{
-    echo htmlspecialchars($_SERVER["PHP_SELF"]);
-}
 
 ?>
 
@@ -42,26 +31,27 @@ function GoToResults()
 <body>
 
 
-    <?php foreach ($questions as $key => $value) :  ?>
+    <header>
+        <div class="container">
+            <h1>TriviaQuiz</h1>
+        </div>
+    </header>
 
-        <h2><?= $key; ?></h2>
-        <h3><?= $value['question']; ?></h3>
+    <main>
+        <div class="container">
+            <h2>Test your Math Knowledge</h2>
+            <ul>
+                <li>
+                    <strong> Number of Questions: </strong><?php echo $NumberOfQuestions; ?>
+                </li>
+                <li>
+                    <strong> Type: </strong>Multiple choice
+                </li>
+            </ul>
 
-
-
-
-    <?php endforeach; ?>
-
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
-
-    </form>
-
-
-    <!-- 
-    <p>
-        `sum_(i=1)^n i^3=((n(n+1))/2)^2`
-    </p>
-    <h1>`[[sin(alpha),cos(beta),0],[-cos(alpha),sin(beta),0],[0,0,1]]`</h1> -->
+            <a href="questions.php?n=1">Start Quiz</a>
+        </div>
+    </main>
 
 </body>
 

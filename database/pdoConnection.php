@@ -11,7 +11,7 @@ $dbHost = getenv('DB_HOST');
 
 try {
     // Create a connection to the database
-    $dbConn = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPassword);
+    $dbConn = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
     $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // $dbConn->setAttribute(PDO::ATTR_CASE, PDO::CASE_UPPER);
     // echo "connection succesful";

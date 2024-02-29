@@ -1,26 +1,26 @@
-:root{
+:root {
 
     /* colors */
-    --main-bg-color:rgb(35, 7, 35) ;
-    --sec-bg-color:purple;
-    --main-txt-color:rgb(219, 152, 219);
-    --sec-txt-color:purple;
+    --main-bg-color: rgb(35, 7, 35);
+    --sec-bg-color: purple;
+    --main-txt-color: rgb(219, 152, 219);
+    --sec-txt-color: purple;
 
-/* sizes */
+    /* sizes */
 
---main-txt-size:1.6rem;
---title-txt-size:4rem;
---subtile-txt-size:2.5rem;
---big-txt-size:2rem;
-    
+    --main-txt-size: 1.6rem;
+    --title-txt-size: 4rem;
+    --subtile-txt-size: 2.5rem;
+    --big-txt-size: 2rem;
+
 
 }
 
-*{
+* {
     box-sizing: border-box;
 }
 
-html{
+html {
     font-size: 10px;
 }
 
@@ -49,4 +49,18 @@ form {
 
 .success {
     color: blue;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 60%;
+    overflow: auto;
+    margin: 0 auto;
 }
