@@ -12,14 +12,12 @@ include_once "database/pdoConnection.php";
 include_once 'components/header.php';
 
 
-
-$sqlCreatePageTable = "SELECT Q.question, A.answer,A.value FROM questions AS Q, answers AS A WHERE A.questionID=Q.id";
-
-
-$result = $dbConn->prepare($sqlCreatePageTable);
-
+// get total number of questions
+$NumberOfQuestions = "SELECT * from questions";
+$result = $dbConn->prepare($NumberOfQuestions);
 $result->execute();
-$questions = $result->fetchAll(PDO::FETCH_ASSOC);
+
+$NumberOfQuestions = $result->rowCount();
 
 
 
@@ -39,12 +37,19 @@ $questions = $result->fetchAll(PDO::FETCH_ASSOC);
     <main>
         <div class="container">
             <h2>You have Finished Quiz</h2>
-            <p>Final Score</p>
+            <p>Final Score:</p> <?php echo $_SESSION['score'] . " out of " . $NumberOfQuestions; ?>
+
+            <a href="questions.php?n=1">Repeat Quiz</a>
+            <form action="auth/logout.php" method="get">
+                <button type="submit">log out</button>
+            </form>
         </div>
     </main>
 
 </body>
 
-<?php include_once 'components/footer.php'; ?>
+<?php include_once 'components/footer.php';
+unset($_SESSION['score']);
+?>
 
 </html>

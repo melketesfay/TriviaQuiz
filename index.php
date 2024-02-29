@@ -30,7 +30,8 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-
+    <h1>TriviaQuiz</h1>
+    <p>Please sign in or create an account to start!</p>
 
 
     <form action=" auth/login.php" method="POST">

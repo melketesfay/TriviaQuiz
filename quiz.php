@@ -39,7 +39,7 @@ $NumberOfQuestions = $result->rowCount();
 
     <main>
         <div class="container">
-            <h2>Test your Math Knowledge</h2>
+            <h2>Test your PHP Knowledge</h2>
             <ul>
                 <li>
                     <strong> Number of Questions: </strong><?php echo $NumberOfQuestions; ?>

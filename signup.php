@@ -44,7 +44,7 @@ include_once("components/header.php");
         }  ?>
         <input type="submit" value="sign up" name="create">
     </form>
-    <a href="index.php">home</a>
+    <a href="index.php">log in</a>
 
 </body>
 <?php echo '<script src="assets/js/script.js"></script>';

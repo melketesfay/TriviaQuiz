@@ -36,7 +36,7 @@ $result->bindParam(':questionid', $number);
 $result->execute();
 $answer = $result->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($answer);
+
 
 
 // get total number of questions
