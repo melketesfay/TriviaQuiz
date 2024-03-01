@@ -28,7 +28,7 @@ $question = $result->fetch(PDO::FETCH_ASSOC);
 
 
 //get the corresponding answers
-$answer = "SELECT * from answers where questionID =:questionid";
+$answer = "SELECT * from answers where questionID =:questionid order by rand()";
 
 $result = $dbConn->prepare($answer);
 
